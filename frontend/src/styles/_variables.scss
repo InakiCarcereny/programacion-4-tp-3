@@ -1,0 +1,27 @@
+$origen-charcoal: #2b2b2e;
+$origen-concrete: #8c8980;
+$origen-rust: #b5651d;
+$origen-steel-light: #d8d5cd;
+$origen-cream: #ede8de;
+$origen-ink: #1a1a1a;
+
+$primary: $origen-charcoal;
+$secondary: $origen-concrete;
+$success: $origen-rust;
+$light: $origen-steel-light;
+$dark: $origen-ink;
+
+$body-bg: $origen-cream;
+$body-color: $origen-ink;
+$border-color: $origen-steel-light;
+
+$border-radius: 0.20rem;
+$border-radius-lg: 0.375rem;
+$border-radius-sm: 0.125rem;
+
+$font-family-base:
+  system-ui,
+  -apple-system,
+  "Segoe UI",
+  Roboto,
+  sans-serif;

@@ -123,7 +123,7 @@ describe("E2E API", () => {
     const noItems = await request(app).post("/orders").send({});
     expect(noItems.status).toBe(400);
     expect(noItems.body).toEqual({
-      error: "Orden tiene que tener por lo menos un item",
+      error: "Invalid input: expected array, received undefined",
     });
 
     const invalidQuantity = await request(app)
@@ -131,7 +131,7 @@ describe("E2E API", () => {
       .send({ items: [{ productId: "Pastry-1", quantity: 0 }] });
     expect(invalidQuantity.status).toBe(400);
     expect(invalidQuantity.body).toEqual({
-      error: "Cantidad invalida para producto Pastry-1",
+      error: "Too small: expected number to be >0",
     });
 
     const nonExistentProduct = await request(app)

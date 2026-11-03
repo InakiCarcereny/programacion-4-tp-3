@@ -1,51 +1,41 @@
 {
-  "name": "cafeteria-origen-api",
+  "name": "cafeteria-origen",
   "version": "1.0.0",
-  "description": "API REST para la gestión de pedidos de la Cafetería Origen",
-  "main": "dist/server.js",
-  "type": "commonjs",
+  "private": true,
   "scripts": {
-    "dev": "tsx watch src/server.ts",
-    "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage",
-    "lint": "eslint src --ext .ts",
-    "lint:fix": "eslint src --ext .ts --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
+    "dev": "concurrently -n backend,frontend -c blue,green \"pnpm:dev:backend\" \"pnpm:dev:frontend\"",
+    "dev:backend": "pnpm --filter cafeteria-origen-backend dev",
+    "dev:frontend": "pnpm --filter cafeteria-origen-frontend dev",
+    "build": "pnpm run build:backend && pnpm run build:frontend",
+    "build:backend": "pnpm --filter cafeteria-origen-backend build",
+    "build:frontend": "pnpm --filter cafeteria-origen-frontend build",
+    "test": "pnpm run test:backend && pnpm run test:frontend",
+    "test:backend": "pnpm --filter cafeteria-origen-backend test",
+    "test:frontend": "pnpm --filter cafeteria-origen-frontend test",
+    "test:e2e": "pnpm --filter cafeteria-origen-frontend test:e2e",
+    "lint": "pnpm run lint:backend && pnpm run lint:frontend",
+    "lint:backend": "pnpm --filter cafeteria-origen-backend lint",
+    "lint:frontend": "pnpm --filter cafeteria-origen-frontend lint",
+    "format": "pnpm --filter cafeteria-origen-backend format && pnpm --filter cafeteria-origen-frontend format",
     "prepare": "husky"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "express": "4.21.2",
-    "zod": "4.6.7"
   },
   "devDependencies": {
     "@commitlint/cli": "19.6.1",
     "@commitlint/config-conventional": "19.6.0",
-    "@types/express": "4.17.21",
-    "@types/node": "22.10.2",
-    "@types/supertest": "6.0.2",
-    "@typescript-eslint/eslint-plugin": "8.18.1",
-    "@typescript-eslint/parser": "8.18.1",
-    "@vitest/coverage-v8": "2.1.8",
-    "eslint": "8.57.1",
-    "eslint-config-prettier": "9.1.0",
+    "concurrently": "10.0.6",
     "husky": "9.1.7",
     "lint-staged": "15.2.11",
-    "prettier": "3.4.2",
-    "supertest": "7.0.0",
-    "tsx": "4.19.2",
-    "typescript": "5.7.2",
-    "vite-tsconfig-paths": "6.1.1",
-    "vitest": "2.1.8"
+    "prettier": "3.4.2"
   },
   "lint-staged": {
-    "*.ts": [
-      "eslint --fix",
+    "backend/src/**/*.ts": [
+      "pnpm --filter cafeteria-origen-backend exec eslint --fix",
+      "prettier --write"
+    ],
+    "frontend/src/**/*.{ts,tsx}": [
+      "prettier --write"
+    ],
+    "frontend/src/**/*.scss": [
       "prettier --write"
     ]
   }

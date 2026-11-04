@@ -5,6 +5,11 @@ export function notFoundHandler(req: Request, _res: Response, next: NextFunction
   next(new NotFoundError(`Ruta ${req.method} ${req.originalUrl} no encontrada`));
 }
 
+export interface ErrorResponse {
+  status: number;
+  body: { error: string };
+}
+
 function isBodyParserError(err: Error): err is Error & { status: number } {
   return (
     err instanceof SyntaxError &&
@@ -13,18 +18,36 @@ function isBodyParserError(err: Error): err is Error & { status: number } {
   );
 }
 
-export function errorHandler(err: Error, _req: Request, res: Response, _next: NextFunction): void {
+function readNumericStatus(err: Error): number | undefined {
+  const candidate = err as { status?: unknown; statusCode?: unknown };
+  if (typeof candidate.status === "number") return candidate.status;
+  if (typeof candidate.statusCode === "number") return candidate.statusCode;
+  return undefined;
+}
+
+export function toErrorResponse(err: Error): ErrorResponse {
   if (isBodyParserError(err)) {
-    res.status(err.status).json({ error: "JSON invalido" });
-    return;
+    return { status: err.status, body: { error: "JSON invalido" } };
   }
 
   if (err instanceof AppError) {
-    res.status(err.statusCode).json({ error: err.message });
-    return;
+    return { status: err.statusCode, body: { error: err.message } };
   }
 
-  console.error(err);
+  const status = readNumericStatus(err);
+  if (status !== undefined && status >= 400 && status < 500) {
+    return { status, body: { error: err.message } };
+  }
 
-  res.status(500).json({ error: "Error interno de servidor" });
+  return { status: 500, body: { error: "Error interno de servidor" } };
+}
+
+export function errorHandler(err: Error, _req: Request, res: Response, _next: NextFunction): void {
+  const { status, body } = toErrorResponse(err);
+
+  if (status >= 500) {
+    console.error(err);
+  }
+
+  res.status(status).json(body);
 }

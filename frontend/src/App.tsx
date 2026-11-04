@@ -3,6 +3,7 @@ import { CartView } from "@/components/CartView";
 import { DoneView } from "@/components/DoneView";
 import { Header } from "@/components/Header";
 import { MenuView } from "@/components/MenuView";
+import { CartProvider } from "@/context/CartContext";
 
 type View = "menu" | "cart" | "done";
 
@@ -16,12 +17,14 @@ export default function App(): JSX.Element {
   };
 
   return (
-    <div className="mx-auto app-shell">
-      <Header />
+    <CartProvider>
+      <div className="mx-auto app-shell">
+        <Header />
 
-      <main className="d-flex flex-column justify-content-between px-3 py-3 flex-grow-1">
-        {views[view]}
-      </main>
-    </div>
+        <main className="d-flex flex-column justify-content-between px-3 py-3 flex-grow-1">
+          {views[view]}
+        </main>
+      </div>
+    </CartProvider>
   );
 }

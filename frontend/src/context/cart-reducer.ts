@@ -1,8 +1,4 @@
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-}
+import type { Product } from "@/types/product";
 
 export interface CartItem {
   product: Product;

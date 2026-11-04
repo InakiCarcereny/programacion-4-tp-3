@@ -1,3 +1,5 @@
+import userEvent from "@testing-library/user-event";
+
 import { delay, http, HttpResponse } from "msw";
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
@@ -45,5 +47,25 @@ describe("menu loaded from the api", () => {
 
     const alert = await screen.findByRole("alert");
     expect(alert).toHaveTextContent("Error interno de servidor");
+  });
+});
+
+describe("menu retry", () => {
+  it("reloads the menu when the retry button is pressed", async () => {
+    const user = userEvent.setup();
+    server.use(
+      http.get(
+        "/api/products",
+        () => HttpResponse.json({ error: "Error interno de servidor" }, { status: 500 }),
+        { once: true },
+      ),
+    );
+
+    render(<App />);
+
+    await screen.findByRole("alert");
+    await user.click(screen.getByRole("button", { name: "Reintentar" }));
+
+    expect(await screen.findByText("Expreso Pocillo Brasil")).toBeInTheDocument();
   });
 });

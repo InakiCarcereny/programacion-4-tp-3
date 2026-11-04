@@ -1,4 +1,8 @@
+import { getMesaFromUrl } from "@/lib/table";
+
 export function Header(): JSX.Element {
+  const mesa = getMesaFromUrl(window.location.search);
+
   return (
     <header className="bg-primary text-light d-flex justify-content-between align-items-end px-3 py-3 w-100">
       <div className="d-flex flex-column">
@@ -10,7 +14,7 @@ export function Header(): JSX.Element {
       <div className="d-flex flex-column text-end">
         <span className="eyebrow text-secondary">Mesa</span>
 
-        <span className="fw-semibold">Mesa 4</span>
+        <span className="fw-semibold">{mesa === null ? "Retiro en la barra" : `Mesa ${mesa}`}</span>
       </div>
     </header>
   );

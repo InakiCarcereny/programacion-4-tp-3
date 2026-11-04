@@ -1,6 +1,21 @@
+@import url("https://fonts.googleapis.com/css2?family=Instrument+Serif&display=swap");
+
 @import "./variables";
 @import "bootstrap/scss/bootstrap";
 
 body {
+  min-height: 100vh;
+  background-color: $origen-steel-light;
+}
+
+.font-display {
+  font-family: $font-family-display;
+}
+
+.app-shell {
+  max-width: 450px;
+  min-height: 100vh;
   background-color: $origen-cream;
+  display: flex;
+  flex-direction: column;
 }

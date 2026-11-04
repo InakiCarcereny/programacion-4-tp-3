@@ -69,3 +69,18 @@ describe("menu retry", () => {
     expect(await screen.findByText("Expreso Pocillo Brasil")).toBeInTheDocument();
   });
 });
+
+describe("menu contract", () => {
+  it("shows an error when the response does not match the contract", async () => {
+    server.use(
+      http.get("/api/products", () =>
+        HttpResponse.json([{ id: 1, nombre: "campo que no existe" }]),
+      ),
+    );
+
+    render(<App />);
+
+    const alert = await screen.findByRole("alert");
+    expect(alert).toHaveTextContent(/contrato/i);
+  });
+});

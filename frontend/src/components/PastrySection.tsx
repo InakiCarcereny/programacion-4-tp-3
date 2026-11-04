@@ -1,5 +1,6 @@
 import { useCart } from "@/context/CartContext";
 import type { Product } from "@/types/product";
+import { formatPrice } from "@/utils/format-price";
 
 const defaultPastries: Product[] = [
   { id: 19, name: "Muffin de chocolate", price: 2500 },
@@ -28,7 +29,7 @@ export function PastrySection({ pastries = defaultPastries }: PastrySectionProps
             <div>
               <p className="fw-semibold mb-0">{pastry.name}</p>
 
-              <p className="text-success mb-0">${pastry.price.toLocaleString("es-AR")}</p>
+              <p className="text-success mb-0">{formatPrice(pastry.price)}</p>
             </div>
 
             <button

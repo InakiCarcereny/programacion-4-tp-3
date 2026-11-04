@@ -1,11 +1,10 @@
 import { HttpResponse, http } from "msw";
+import { productosFixture } from "@/mocks/fixtures";
 
 export const handlers = [
-  http.get("/api/products", () => {
-    return HttpResponse.json([]);
-  }),
+  http.get("/api/products", () => HttpResponse.json(productosFixture)),
 
-  http.post("/api/orders", () => {
-    return HttpResponse.json({ error: "no implementado en los mocks todavia" }, { status: 501 });
-  }),
+  http.post("/api/orders", () =>
+    HttpResponse.json({ error: "no implementado en los mocks todavia" }, { status: 501 }),
+  ),
 ];

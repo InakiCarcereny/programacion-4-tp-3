@@ -4,7 +4,7 @@ import { useMenu } from "@/hooks/useMenu";
 import { formatPrecio } from "@/lib/price";
 
 export function MenuView(): JSX.Element {
-  const { state } = useMenu();
+  const { state, retry } = useMenu();
 
   if (state.status === "cargando") {
     return (
@@ -15,7 +15,14 @@ export function MenuView(): JSX.Element {
   }
 
   if (state.status === "error") {
-    return <div role="alert">{state.message}</div>;
+    return (
+      <div role="alert" className="d-flex flex-column gap-2 align-items-center py-4">
+        <p className="mb-0">{state.message}</p>
+        <button type="button" className="btn btn-outline-primary" onClick={() => void retry()}>
+          Reintentar
+        </button>
+      </div>
+    );
   }
 
   return (

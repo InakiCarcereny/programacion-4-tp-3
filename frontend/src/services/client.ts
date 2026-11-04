@@ -1,9 +1,4 @@
-export interface Producto {
-  id: string;
-  name: string;
-  basePrice: number;
-  finalPrice: number;
-}
+import { productosSchema, type Producto } from "@/schemas/products";
 
 export class ApiError extends Error {
   constructor(
@@ -12,6 +7,13 @@ export class ApiError extends Error {
   ) {
     super(message);
     this.name = "ApiError";
+  }
+}
+
+export class ContractError extends Error {
+  constructor() {
+    super("La respuesta del menú no cumple el contrato de la API");
+    this.name = "ContractError";
   }
 }
 
@@ -34,5 +36,12 @@ export async function getProductos(): Promise<Producto[]> {
     throw new ApiError(await readErrorMessage(response), response.status);
   }
 
-  return (await response.json()) as Producto[];
+  const data: unknown = await response.json();
+  const parsed = productosSchema.safeParse(data);
+
+  if (!parsed.success) {
+    throw new ContractError();
+  }
+
+  return parsed.data;
 }

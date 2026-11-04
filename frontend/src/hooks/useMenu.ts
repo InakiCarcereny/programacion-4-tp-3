@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
-import { getProductos, type Producto } from "@/services/client";
+import { getProductos } from "@/services/client";
+import type { Producto } from "@/schemas/products";
+// el resto igual
 
 export type MenuState =
   | { status: "cargando" }

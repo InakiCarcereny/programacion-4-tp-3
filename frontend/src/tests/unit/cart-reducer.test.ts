@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
-import type { Product } from "@/context/cart-reducer";
 import { cartReducer, getSubtotal, initialCartState } from "@/context/cart-reducer";
+import type { Product } from "@/types/product";
 
 const muffin: Product = { id: 19, name: "Muffin de chocolate", price: 2500 };
 const cake: Product = {

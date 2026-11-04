@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import { createContext, useContext, useReducer } from "react";
-import type { CartAction, CartState } from "@/context/cart-reducer";
 import { cartReducer, getSubtotal, initialCartState } from "@/context/cart-reducer";
+import type { CartAction, CartState } from "@/types/cart";
 
 interface CartContextValue {
   state: CartState;
@@ -11,8 +11,14 @@ interface CartContextValue {
 
 const CartContext = createContext<CartContextValue | undefined>(undefined);
 
-export function CartProvider({ children }: { children: ReactNode }): JSX.Element {
-  const [state, dispatch] = useReducer(cartReducer, initialCartState);
+export function CartProvider({
+  children,
+  initialState = initialCartState,
+}: {
+  children: ReactNode;
+  initialState?: CartState;
+}): JSX.Element {
+  const [state, dispatch] = useReducer(cartReducer, initialState);
   const subtotal = getSubtotal(state);
 
   return (

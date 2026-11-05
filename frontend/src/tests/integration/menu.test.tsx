@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 
 import { delay, http, HttpResponse } from "msw";
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "@/App";
 import { server } from "@/mocks/server";
@@ -31,9 +31,13 @@ describe("menu loaded from the api", () => {
 
     render(<App />);
 
-    expect(await screen.findByText("Muffin de chocolate")).toBeInTheDocument();
-    expect(screen.getByText("$5.900")).toBeInTheDocument();
-    expect(screen.getByText("$2.500")).toBeInTheDocument();
+    await screen.findByText("Expreso Pocillo Brasil");
+    const menu = screen.getByRole("region", { name: "Menú" });
+
+    expect(within(menu).getByText("Expreso Pocillo Brasil")).toBeInTheDocument();
+    expect(within(menu).getByText("$5.900")).toBeInTheDocument();
+    expect(within(menu).getByText("Muffin de chocolate")).toBeInTheDocument();
+    expect(within(menu).getByText("$2.500")).toBeInTheDocument();
   });
 
   it("shows the api message when the menu fails to load", async () => {

@@ -16,9 +16,17 @@ export default defineConfig({
       use: { ...devices["Desktop Chrome"] },
     },
   ],
-  webServer: {
-    command: "npm run preview",
-    url: "http://localhost:5173",
-    reuseExistingServer: !process.env.CI,
-  },
+  webServer: [
+    {
+      command: "pnpm --filter cafeteria-origen-backend dev",
+      url: "http://localhost:3000/health",
+      reuseExistingServer: !process.env.CI,
+      env: { NODE_ENV: "test" },
+    },
+    {
+      command: "pnpm preview",
+      url: "http://localhost:5173",
+      reuseExistingServer: !process.env.CI,
+    },
+  ],
 });

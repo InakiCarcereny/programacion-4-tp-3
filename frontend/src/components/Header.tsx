@@ -1,4 +1,4 @@
-import { getMesaFromUrl } from "@/lib/table";
+import { getMesaFromUrl } from "@/utils/table";
 
 export function Header(): JSX.Element {
   const mesa = getMesaFromUrl(window.location.search);

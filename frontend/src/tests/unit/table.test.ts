@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { getMesaFromUrl } from "@/lib/table";
+import { getMesaFromUrl } from "@/utils/table";
 
 describe("getMesaFromUrl", () => {
   it("returns the table number when the qr param is valid", () => {

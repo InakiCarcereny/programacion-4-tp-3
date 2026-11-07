@@ -26,23 +26,21 @@ describe("GET /products", () => {
     }
   });
 
-  it("returns the domain price and variety of the spec example coffee", async () => {
-    const res = await request(app).get("/products");
-    const medium = res.body.find((p: { name: string }) => p.name === "Expreso Mediano");
-
-    expect(medium).toEqual(
-      expect.objectContaining({
-        type: "espresso",
-        name: "Expreso Mediano",
-        size: "Mediano",
-        coffeeGrams: 27,
-        variety: {
-          name: "Colombia",
-          description: "Acidez media, cuerpo equilibrado y notas cítricas y florales",
-        },
-        price: 7360,
-      }),
-    );
+  it("returns the product of the spec example with its numeric id", async () => {
+    const res = await request(app).get("/products/5");
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: 5,
+      type: "expreso",
+      name: "Expreso Mediano",
+      size: "Mediano",
+      grams: 27,
+      variety: {
+        name: "Colombia",
+        description: "Acidez media, cuerpo equilibrado y notas cítricas y florales",
+      },
+      price: 7360,
+    });
   });
 
   it("returns a product by id", async () => {

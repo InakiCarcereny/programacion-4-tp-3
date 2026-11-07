@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
-import { getProductos } from "@/services/client";
-import type { Producto } from "@/schemas/products";
+import { getProducts } from "@/services/client";
+import type { Product } from "@/schemas/products";
 
 export type MenuState =
   | { status: "cargando" }
   | { status: "error"; message: string }
-  | { status: "listo"; productos: Producto[] };
+  | { status: "listo"; products: Product[] };
 
 export interface UseMenuResult {
   state: MenuState;
@@ -19,8 +19,8 @@ export function useMenu(): UseMenuResult {
     setState({ status: "cargando" });
 
     try {
-      const productos = await getProductos();
-      setState({ status: "listo", productos });
+      const products = await getProducts();
+      setState({ status: "listo", products });
     } catch (error) {
       setState({
         status: "error",

@@ -1,12 +1,12 @@
 import { z } from "zod";
 
-export const productoSchema = z.object({
+export const productSchema = z.object({
   id: z.string(),
   name: z.string(),
   basePrice: z.number(),
   finalPrice: z.number(),
 });
 
-export const productosSchema = z.array(productoSchema);
+export const productsSchema = z.array(productSchema);
 
-export type Producto = z.infer<typeof productoSchema>;
+export type Product = z.infer<typeof productSchema>;

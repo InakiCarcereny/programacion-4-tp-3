@@ -4,9 +4,9 @@ import { ReactElement } from "react";
 import { describe, expect, it } from "vitest";
 import { PastrySection } from "@/components/PastrySection";
 import { CartProvider, useCart } from "@/context/CartContext";
-import type { Product } from "@/types/product";
+import type { CartProduct } from "@/types/cart";
 
-const pastries: Product[] = [
+const pastries: CartProduct[] = [
   { id: 19, name: "Muffin de chocolate", price: 2500 },
   { id: 20, name: "Torta selva negra", price: 4200 },
 ];

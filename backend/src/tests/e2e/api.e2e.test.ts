@@ -23,9 +23,9 @@ describe("E2E API", () => {
       expect(product).toEqual(
         expect.objectContaining({
           id: expect.any(String),
+          type: expect.any(String),
           name: expect.any(String),
-          basePrice: expect.any(Number),
-          finalPrice: expect.any(Number),
+          price: expect.any(Number),
         }),
       );
     }
@@ -37,9 +37,9 @@ describe("E2E API", () => {
     expect(found.body).toEqual(
       expect.objectContaining({
         id: "Pastry-1",
+        type: "pastry",
         name: "Muffin de chocolate",
-        basePrice: 2500,
-        finalPrice: 2500,
+        price: 2500,
       }),
     );
 

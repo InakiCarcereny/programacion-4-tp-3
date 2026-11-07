@@ -4,7 +4,7 @@ import type { CoffeeProduct } from "@/types/product";
 
 export abstract class Coffee extends Product {
   constructor(
-    id: string,
+    id: number,
     name: string,
     basePrice: number,
     public readonly size: CoffeeSize,

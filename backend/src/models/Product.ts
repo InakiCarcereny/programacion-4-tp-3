@@ -2,7 +2,7 @@ import type { Product as IProduct, ProductType } from "@/types/product";
 
 export abstract class Product {
   constructor(
-    public readonly id: string,
+    public readonly id: number,
     public readonly name: string,
     public readonly basePrice: number,
   ) {}

@@ -10,7 +10,7 @@ const FILTERED_GRAMS: Record<CoffeeSize, number> = {
 export class FilteredCoffee extends Coffee {
   static readonly BASE_PRICE = 3200;
 
-  constructor(id: string, size: CoffeeSize, variety: CoffeeVariety) {
+  constructor(id: number, size: CoffeeSize, variety: CoffeeVariety) {
     super(id, `Filtrado ${size}`, FilteredCoffee.BASE_PRICE, size, FILTERED_GRAMS[size], variety);
   }
 

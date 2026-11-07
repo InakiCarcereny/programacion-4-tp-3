@@ -8,7 +8,7 @@ export function getProducts(_req: Request, res: Response): void {
 }
 
 export function getProductById(req: Request, res: Response, next: NextFunction): void {
-  const product = findProductById(req.params.id);
+  const product = findProductById(Number(req.params.id));
   if (!product) {
     return next(new NotFoundError(`Producto ${req.params.id} no encontrado`));
   }

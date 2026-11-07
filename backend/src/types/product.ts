@@ -8,7 +8,7 @@ export interface Variety {
 }
 
 export interface Product {
-  id: string;
+  id: number;
   type: ProductType;
   name: string;
   price: number;

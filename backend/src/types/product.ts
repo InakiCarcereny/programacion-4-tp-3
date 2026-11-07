@@ -1,6 +1,6 @@
 import type { CoffeeSize } from "@/types/coffee";
 
-export type ProductType = "espresso" | "filtered" | "pastry";
+export type ProductType = "expreso" | "filtrado" | "pasteleria";
 
 export interface Variety {
   name: string;
@@ -15,7 +15,7 @@ export interface Product {
 }
 
 export interface CoffeeProduct extends Product {
-  type: "espresso" | "filtered";
+  type: "expreso" | "filtrado";
   size: CoffeeSize;
   coffeeGrams: number;
   variety: Variety;

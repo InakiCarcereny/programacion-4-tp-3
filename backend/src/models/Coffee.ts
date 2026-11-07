@@ -14,7 +14,7 @@ export abstract class Coffee extends Product {
     super(id, name, basePrice);
   }
 
-  public abstract get type(): "espresso" | "filtered";
+  public abstract get type(): "expreso" | "filtrado";
 
   protected get coffeeCost(): number {
     return this.grams * PRICE_PER_GRAM[this.variety];
@@ -29,7 +29,7 @@ export abstract class Coffee extends Product {
       ...super.toJSON(),
       type: this.type,
       size: this.size,
-      grams: this.grams,
+      coffeeGrams: this.grams,
       variety: { name: this.variety, description: VARIETY_DESCRIPTIONS[this.variety] },
     };
   }

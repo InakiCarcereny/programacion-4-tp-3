@@ -1,5 +1,6 @@
 import { Product } from "@/models/Product";
-import { CoffeeSize, CoffeeVariety, PRICE_PER_GRAM } from "@/types/coffee";
+import { CoffeeSize, CoffeeVariety, PRICE_PER_GRAM, VARIETY_DESCRIPTIONS } from "@/types/coffee";
+import type { CoffeeProduct } from "@/types/product";
 
 export abstract class Coffee extends Product {
   constructor(
@@ -13,11 +14,24 @@ export abstract class Coffee extends Product {
     super(id, name, basePrice);
   }
 
-  protected get coffeeCost(): number {
-    return this.grams * PRICE_PER_GRAM[this.variety];
-  }
+  public abstract get type(): "espresso" | "filtered";
 
   public calculatePrice(): number {
-    return this.coffeeCost + this.basePrice;
+    return this.grams * PRICE_PER_GRAM[this.variety] + this.basePrice;
+  }
+
+  public toJSON(): CoffeeProduct {
+    return {
+      id: this.id,
+      type: this.type,
+      name: this.name,
+      size: this.size,
+      coffeeGrams: this.grams,
+      variety: {
+        name: this.variety,
+        description: VARIETY_DESCRIPTIONS[this.variety],
+      },
+      price: this.calculatePrice(),
+    };
   }
 }

@@ -1,4 +1,4 @@
-import type { Product as IProduct } from "@/types/product";
+import type { Product as IProduct, ProductType } from "@/types/product";
 
 export abstract class Product {
   constructor(
@@ -7,14 +7,16 @@ export abstract class Product {
     public readonly basePrice: number,
   ) {}
 
+  public abstract get type(): ProductType;
+
   public abstract calculatePrice(): number;
 
   public toJSON(): IProduct {
     return {
       id: this.id,
+      type: this.type,
       name: this.name,
-      basePrice: this.basePrice,
-      finalPrice: this.calculatePrice(),
+      price: this.calculatePrice(),
     };
   }
 }

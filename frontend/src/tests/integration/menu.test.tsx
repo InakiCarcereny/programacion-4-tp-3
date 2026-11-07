@@ -6,9 +6,9 @@ import { describe, expect, it } from "vitest";
 import App from "@/App";
 import { server } from "@/mocks/server";
 
-const productos = [
-  { id: "Espresso-1", name: "Expreso Pocillo Brasil", basePrice: 5000, finalPrice: 5900 },
-  { id: "Pastry-1", name: "Muffin de chocolate", basePrice: 2500, finalPrice: 2500 },
+const products = [
+  { id: 1, name: "Expreso Pocillo Brasil", basePrice: 5000, finalPrice: 7360 },
+  { id: 19, name: "Muffin de chocolate", basePrice: 2500, finalPrice: 2500 },
 ];
 
 describe("menu loaded from the api", () => {
@@ -16,7 +16,7 @@ describe("menu loaded from the api", () => {
     server.use(
       http.get("/api/products", async () => {
         await delay(100);
-        return HttpResponse.json(productos);
+        return HttpResponse.json(products);
       }),
     );
 
@@ -27,7 +27,7 @@ describe("menu loaded from the api", () => {
   });
 
   it("renders every product with its price coming from the api", async () => {
-    server.use(http.get("/api/products", () => HttpResponse.json(productos)));
+    server.use(http.get("/api/products", () => HttpResponse.json(products)));
 
     render(<App />);
 
@@ -35,7 +35,7 @@ describe("menu loaded from the api", () => {
     const menu = screen.getByRole("region", { name: "Menú" });
 
     expect(within(menu).getByText("Expreso Pocillo Brasil")).toBeInTheDocument();
-    expect(within(menu).getByText("$5.900")).toBeInTheDocument();
+    expect(within(menu).getByText("$7.360")).toBeInTheDocument();
     expect(within(menu).getByText("Muffin de chocolate")).toBeInTheDocument();
     expect(within(menu).getByText("$2.500")).toBeInTheDocument();
   });
@@ -77,9 +77,7 @@ describe("menu retry", () => {
 describe("menu contract", () => {
   it("shows an error when the response does not match the contract", async () => {
     server.use(
-      http.get("/api/products", () =>
-        HttpResponse.json([{ id: 1, nombre: "campo que no existe" }]),
-      ),
+      http.get("/api/products", () => HttpResponse.json([{ id: 1, name: "campo que no existe" }])),
     );
 
     render(<App />);

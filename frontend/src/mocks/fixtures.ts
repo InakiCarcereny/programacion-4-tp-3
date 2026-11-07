@@ -1,5 +1,15 @@
-export const productosFixture = [
-  { id: "Espresso-1", name: "Expreso Pocillo Brasil", basePrice: 5000, finalPrice: 5900 },
-  { id: "Filtered-1", name: "Filtrado Pocillo Brasil", basePrice: 4800, finalPrice: 5400 },
-  { id: "Pastry-1", name: "Muffin de chocolate", basePrice: 2500, finalPrice: 2500 },
+export const productsFixture = [
+  {
+    id: 5,
+    type: "expreso",
+    name: "Expreso Mediano",
+    size: "Mediano",
+    grams: 27,
+    variety: {
+      name: "Colombia",
+      description: "Acidez media, cuerpo equilibrado y notas cítricas y florales",
+    },
+    price: 7360,
+  },
+  { id: 19, type: "pasteleria", name: "Muffin de chocolate", price: 2500 },
 ];

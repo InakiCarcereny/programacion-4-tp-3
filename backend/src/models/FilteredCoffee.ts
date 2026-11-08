@@ -18,6 +18,7 @@ export class FilteredCoffee extends Coffee {
       size,
       FILTERED_GRAMS[size],
       variety,
+      "filtrado",
     );
   }
 }

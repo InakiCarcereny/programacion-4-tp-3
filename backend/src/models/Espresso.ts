@@ -18,6 +18,7 @@ export class Espresso extends Coffee {
       size,
       ESPRESSO_GRAMS[size],
       variety,
+      "expreso",
     );
   }
 }

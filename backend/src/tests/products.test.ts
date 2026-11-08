@@ -31,7 +31,7 @@ describe("GET /products contract", () => {
     const res = await request(app).get("/products");
     expect(res.status).toBe(200);
 
-    const tipos = res.body.map((p: { tipo?: string }) => p.tipo);
+    const tipos: Array<string | undefined> = res.body.map((p: { tipo?: string }) => p.tipo);
     expect(tipos.filter((t) => t === "expreso")).toHaveLength(9);
     expect(tipos.filter((t) => t === "filtrado")).toHaveLength(9);
     expect(tipos.filter((t) => t === "pasteleria")).toHaveLength(2);

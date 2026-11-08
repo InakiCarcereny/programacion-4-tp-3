@@ -18,6 +18,21 @@ export class ContractError extends Error {
   }
 }
 
+export class NetworkError extends Error {
+  constructor() {
+    super("No pudimos conectar con la cafetería. Revisá tu conexión e intentá de nuevo.");
+    this.name = "NetworkError";
+  }
+}
+
+async function send(input: string, init?: RequestInit): Promise<Response> {
+  try {
+    return await fetch(input, init);
+  } catch {
+    throw new NetworkError();
+  }
+}
+
 async function readErrorMessage(response: Response): Promise<string> {
   try {
     const body = (await response.json()) as { error?: unknown };
@@ -65,7 +80,7 @@ async function readOrder(response: Response): Promise<Order> {
 }
 
 export async function createOrder(order: NewOrder): Promise<Order> {
-  const response = await fetch("/api/orders", {
+  const response = await send("/api/orders", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(order),
@@ -75,7 +90,7 @@ export async function createOrder(order: NewOrder): Promise<Order> {
 }
 
 export async function getOrder(id: string): Promise<Order> {
-  const response = await fetch(`/api/orders/${encodeURIComponent(id)}`);
+  const response = await send(`/api/orders/${encodeURIComponent(id)}`);
 
   return readOrder(response);
 }

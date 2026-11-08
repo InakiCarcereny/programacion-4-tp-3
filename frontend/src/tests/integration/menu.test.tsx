@@ -7,8 +7,26 @@ import App from "@/App";
 import { server } from "@/mocks/server";
 
 const productos = [
-  { id: "Espresso-1", name: "Expreso Pocillo Brasil", basePrice: 5000, finalPrice: 5900 },
-  { id: "Pastry-1", name: "Muffin de chocolate", basePrice: 2500, finalPrice: 2500 },
+  {
+    id: "Espresso-1",
+    tipo: "expreso",
+    name: "Expreso Pocillo Brasil",
+    basePrice: 5000,
+    finalPrice: 5900,
+    tamanio: "Pocillo",
+    gramosCafe: 18,
+    variedad: {
+      nombre: "Brasil",
+      descripcion: "Acidez baja, cuerpo intenso y notas a chocolate y nuez",
+    },
+  },
+  {
+    id: "Pastry-1",
+    tipo: "pasteleria",
+    name: "Muffin de chocolate",
+    basePrice: 2500,
+    finalPrice: 2500,
+  },
 ];
 
 describe("menu loaded from the api", () => {

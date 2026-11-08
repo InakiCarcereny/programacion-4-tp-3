@@ -4,10 +4,10 @@ import { formatPrice } from "@/utils/format-price";
 interface CartViewProps {
   onConfirm?: () => void;
   onBack?: () => void;
-  mesa?: number;
+  table?: number;
 }
 
-export function CartView({ onConfirm, onBack, mesa }: CartViewProps): JSX.Element {
+export function CartView({ onConfirm, onBack, table }: CartViewProps): JSX.Element {
   const { state, dispatch, subtotal } = useCart();
   const isEmpty = state.items.length === 0;
 
@@ -104,7 +104,7 @@ export function CartView({ onConfirm, onBack, mesa }: CartViewProps): JSX.Elemen
 
       <div className="flex-grow-1" />
 
-      <p className="small mb-0">{mesa ? `Se entrega en la mesa ${mesa}.` : "Retiro en barra."}</p>
+      <p className="small mb-0">{table ? `Se entrega en la mesa ${table}.` : "Retiro en barra."}</p>
 
       <button
         type="button"

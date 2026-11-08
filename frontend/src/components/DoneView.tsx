@@ -1,3 +1,4 @@
+import { useOrderTracking } from "@/hooks/useOrderTracking";
 import type { Order } from "@/schemas/orders";
 import { formatPrice } from "@/utils/format-price";
 import { formatOrderStatus } from "@/utils/order";
@@ -6,7 +7,9 @@ interface DoneViewProps {
   order: Order;
 }
 
-export function DoneView({ order }: DoneViewProps): JSX.Element {
+export function DoneView({ order: initialOrder }: DoneViewProps): JSX.Element {
+  const { order, refreshing, error, refresh } = useOrderTracking(initialOrder);
+
   return (
     <section aria-labelledby="done-heading" className="d-flex flex-column gap-3 flex-grow-1">
       <h1 id="done-heading" className="font-display fs-1 fw-light mb-0">
@@ -33,6 +36,23 @@ export function DoneView({ order }: DoneViewProps): JSX.Element {
           <dd className="mb-0 fw-semibold font-monospace">{formatPrice(order.total)}</dd>
         </div>
       </dl>
+
+      {error && (
+        <p role="alert" className="text-danger mb-0">
+          {error}
+        </p>
+      )}
+
+      <div className="flex-grow-1" />
+
+      <button
+        type="button"
+        className="btn btn-outline-dark w-100 py-3 rounded-1"
+        disabled={refreshing}
+        onClick={() => void refresh()}
+      >
+        {refreshing ? "Actualizando…" : "Actualizar estado"}
+      </button>
     </section>
   );
 }

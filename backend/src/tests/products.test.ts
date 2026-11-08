@@ -22,7 +22,7 @@ describe("GET /products", () => {
           price: expect.any(Number),
         }),
       );
-      expect(["espresso", "filtered", "pastry"]).toContain(product.type);
+      expect(["expreso", "filtrado", "pasteleria"]).toContain(product.type);
     }
   });
 
@@ -44,11 +44,11 @@ describe("GET /products", () => {
   });
 
   it("returns a product by id", async () => {
-    const res = await request(app).get("/products/Pastry-1");
+    const res = await request(app).get("/products/19");
     expect(res.status).toBe(200);
     expect(res.body).toEqual(
       expect.objectContaining({
-        type: "pastry",
+        type: "pasteleria",
         name: "Muffin de chocolate",
         price: 2500,
       }),

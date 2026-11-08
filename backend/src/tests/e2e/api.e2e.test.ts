@@ -37,7 +37,7 @@ describe("E2E API", () => {
     expect(found.body).toEqual(
       expect.objectContaining({
         id: 19,
-        type: "pastry",
+        type: "pasteleria",
         name: "Muffin de chocolate",
         price: 2500,
       }),

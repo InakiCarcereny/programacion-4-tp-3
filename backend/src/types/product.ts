@@ -17,6 +17,6 @@ export interface Product {
 export interface CoffeeProduct extends Product {
   type: "expreso" | "filtrado";
   size: CoffeeSize;
-  coffeeGrams: number;
+  grams: number;
   variety: Variety;
 }

@@ -29,7 +29,7 @@ export abstract class Coffee extends Product {
       ...super.toJSON(),
       type: this.type,
       size: this.size,
-      coffeeGrams: this.grams,
+      grams: this.grams,
       variety: { name: this.variety, description: VARIETY_DESCRIPTIONS[this.variety] },
     };
   }

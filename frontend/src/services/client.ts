@@ -1,3 +1,4 @@
+import { orderSchema, type NewOrder, type Order } from "@/schemas/orders";
 import { productosSchema, type Producto } from "@/schemas/products";
 
 export class ApiError extends Error {
@@ -11,8 +12,8 @@ export class ApiError extends Error {
 }
 
 export class ContractError extends Error {
-  constructor() {
-    super("La respuesta del menú no cumple el contrato de la API");
+  constructor(message = "La respuesta del menú no cumple el contrato de la API") {
+    super(message);
     this.name = "ContractError";
   }
 }
@@ -44,4 +45,37 @@ export async function getProductos(): Promise<Producto[]> {
   }
 
   return parsed.data;
+}
+
+const ORDER_CONTRACT_MESSAGE = "La respuesta del pedido no cumple el contrato de la API";
+
+async function readOrder(response: Response): Promise<Order> {
+  if (!response.ok) {
+    throw new ApiError(await readErrorMessage(response), response.status);
+  }
+
+  const data: unknown = await response.json();
+  const parsed = orderSchema.safeParse(data);
+
+  if (!parsed.success) {
+    throw new ContractError(ORDER_CONTRACT_MESSAGE);
+  }
+
+  return parsed.data;
+}
+
+export async function createOrder(order: NewOrder): Promise<Order> {
+  const response = await fetch("/api/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(order),
+  });
+
+  return readOrder(response);
+}
+
+export async function getOrder(id: string): Promise<Order> {
+  const response = await fetch(`/api/orders/${encodeURIComponent(id)}`);
+
+  return readOrder(response);
 }

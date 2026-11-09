@@ -1,63 +1,64 @@
 import { describe, expect, it } from "vitest";
-import { productosFixture } from "@/mocks/fixtures";
+import { coffeeProductsFixture } from "@/mocks/fixtures";
 import { findCoffee, listCoffeeOrigins } from "@/utils/find-coffee";
 
 describe("findCoffee", () => {
   it("finds the espresso matching size and origin", () => {
-    const coffee = findCoffee(productosFixture, {
-      tipo: "expreso",
-      tamanio: "Mediano",
-      origen: "Colombia",
+    const coffee = findCoffee(coffeeProductsFixture, {
+      type: "expreso",
+      size: "Mediano",
+      origin: "Colombia",
     });
 
     expect(coffee).toMatchObject({
-      id: "Espresso-5",
-      name: "Expreso Mediano Colombia",
-      basePrice: 2500,
-      finalPrice: 7360,
-      tamanio: "Mediano",
-      variedad: { nombre: "Colombia" },
+      id: 5,
+      type: "expreso",
+      name: "Expreso Mediano",
+      size: "Mediano",
+      price: 7360,
+      variety: { name: "Colombia" },
     });
   });
 
   it("finds a filtered coffee matching size and origin", () => {
-    const coffee = findCoffee(productosFixture, {
-      tipo: "filtrado",
-      tamanio: "Taza grande",
-      origen: "Etiopia",
+    const coffee = findCoffee(coffeeProductsFixture, {
+      type: "filtrado",
+      size: "Taza grande",
+      origin: "Etiopia",
     });
 
     expect(coffee).toMatchObject({
-      id: "Filtered-9",
-      name: "Filtrado Taza grande Etiopia",
-      finalPrice: 9200,
-      tamanio: "Taza grande",
-      variedad: { nombre: "Etiopia" },
+      id: 18,
+      type: "filtrado",
+      name: "Filtrado Taza grande",
+      price: 9200,
+      size: "Taza grande",
+      variety: { name: "Etiopia" },
     });
   });
 
   it("returns undefined when the combination does not exist", () => {
-    const withoutColombia = productosFixture.filter(
-      (producto) => producto.tipo !== "pasteleria" && producto.variedad.nombre !== "Colombia",
+    const withoutColombia = coffeeProductsFixture.filter(
+      (product) => product.type !== "pasteleria" && product.variety.name !== "Colombia",
     );
 
     expect(
       findCoffee(withoutColombia, {
-        tipo: "expreso",
-        tamanio: "Mediano",
-        origen: "Colombia",
+        type: "expreso",
+        size: "Mediano",
+        origin: "Colombia",
       }),
     ).toBeUndefined();
   });
 
   it("ignores pastries", () => {
-    const onlyPastries = productosFixture.filter((producto) => producto.tipo === "pasteleria");
+    const onlyPastries = coffeeProductsFixture.filter((product) => product.type === "pasteleria");
 
     expect(
       findCoffee(onlyPastries, {
-        tipo: "expreso",
-        tamanio: "Mediano",
-        origen: "Colombia",
+        type: "expreso",
+        size: "Mediano",
+        origin: "Colombia",
       }),
     ).toBeUndefined();
   });
@@ -65,29 +66,29 @@ describe("findCoffee", () => {
 
 describe("listCoffeeOrigins", () => {
   it("lists each origin once with its description", () => {
-    const origins = listCoffeeOrigins(productosFixture);
+    const origins = listCoffeeOrigins(coffeeProductsFixture);
 
     expect(origins).toHaveLength(3);
     expect(origins).toEqual(
       expect.arrayContaining([
         {
-          nombre: "Brasil",
-          descripcion: "Acidez baja, cuerpo intenso y notas a chocolate y nuez",
+          name: "Brasil",
+          description: "Acidez baja, cuerpo redondo y notas a chocolate y nuez",
         },
         {
-          nombre: "Colombia",
-          descripcion: "Acidez media, cuerpo equilibrado y notas cítricas y florales",
+          name: "Colombia",
+          description: "Acidez media, cuerpo equilibrado y notas cítricas y florales",
         },
         {
-          nombre: "Etiopia",
-          descripcion: "Acidez alta, cuerpo ligero y notas florales y frutales",
+          name: "Etiopia",
+          description: "Acidez alta, cuerpo ligero y notas a frutas rojas y florales",
         },
       ]),
     );
   });
 
   it("returns no origins when there are only pastries", () => {
-    const onlyPastries = productosFixture.filter((producto) => producto.tipo === "pasteleria");
+    const onlyPastries = coffeeProductsFixture.filter((product) => product.type === "pasteleria");
 
     expect(listCoffeeOrigins(onlyPastries)).toEqual([]);
   });

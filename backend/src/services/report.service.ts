@@ -9,7 +9,7 @@ export function calculateTotalRevenue(): number {
 }
 
 export function calculateSalesByProduct(): ProductSales[] {
-  const sales = new Map<string, ProductSales>();
+  const sales = new Map<number, ProductSales>();
 
   for (const order of listOrders()) {
     for (const item of order.items) {

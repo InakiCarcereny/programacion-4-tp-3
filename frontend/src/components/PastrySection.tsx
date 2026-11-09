@@ -1,14 +1,14 @@
 import { useCart } from "@/context/CartContext";
-import type { Product } from "@/types/product";
+import type { CartProduct } from "@/types/cart";
 import { formatPrice } from "@/utils/format-price";
 
-const defaultPastries: Product[] = [
-  { id: "Pastry-1", name: "Muffin de chocolate", price: 2500 },
-  { id: "Pastry-2", name: "Torta selva negra", price: 4200 },
+const defaultPastries: CartProduct[] = [
+  { id: 19, name: "Muffin de chocolate", price: 2500 },
+  { id: 20, name: "Torta selva negra", price: 4200 },
 ];
 
 interface PastrySectionProps {
-  pastries?: Product[];
+  pastries?: CartProduct[];
 }
 
 export function PastrySection({ pastries = defaultPastries }: PastrySectionProps): JSX.Element {

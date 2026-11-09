@@ -23,11 +23,11 @@ const emptyState: CartState = { items: [] };
 const stateWithItems: CartState = {
   items: [
     {
-      product: { id: "Pastry-1", name: "Muffin de chocolate", price: 2500 },
+      product: { id: 19, name: "Muffin de chocolate", price: 2500 },
       quantity: 2,
     },
     {
-      product: { id: "Pastry-2", name: "Torta selva negra", price: 4200 },
+      product: { id: 20, name: "Torta selva negra", price: 4200 },
       quantity: 1,
     },
   ],
@@ -44,7 +44,7 @@ describe("CartView", () => {
     renderCartView(stateWithItems);
 
     expect(screen.getByText("Muffin de chocolate")).toBeInTheDocument();
-    expect(screen.getByTestId("quantity-Pastry-1")).toHaveTextContent("2");
+    expect(screen.getByTestId("quantity-19")).toHaveTextContent("2");
     expect(screen.getByText("$5.000")).toBeInTheDocument();
 
     expect(screen.getByText("Torta selva negra")).toBeInTheDocument();
@@ -67,7 +67,7 @@ describe("CartView", () => {
       }),
     );
 
-    expect(screen.getByTestId("quantity-Pastry-1")).toHaveTextContent("3");
+    expect(screen.getByTestId("quantity-19")).toHaveTextContent("3");
     expect(screen.getByText("$7.500")).toBeInTheDocument();
   });
 
@@ -81,7 +81,7 @@ describe("CartView", () => {
       }),
     );
 
-    expect(screen.getByTestId("quantity-Pastry-1")).toHaveTextContent("1");
+    expect(screen.getByTestId("quantity-19")).toHaveTextContent("1");
     expect(screen.getByText("$2.500")).toBeInTheDocument();
   });
 
@@ -90,7 +90,7 @@ describe("CartView", () => {
     renderCartView({
       items: [
         {
-          product: { id: "Pastry-1", name: "Muffin de chocolate", price: 2500 },
+          product: { id: 19, name: "Muffin de chocolate", price: 2500 },
           quantity: 1,
         },
       ],

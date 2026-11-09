@@ -5,6 +5,6 @@ export function listProducts(): Product[] {
   return products;
 }
 
-export function findProductById(id: string): Product | undefined {
+export function findProductById(id: number): Product | undefined {
   return products.find((product) => product.id === id);
 }

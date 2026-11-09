@@ -1,8 +1,8 @@
 import { Product } from "@/models/Product";
 
 export class Pastry extends Product {
-  constructor(id: string, name: string, basePrice: number) {
-    super(id, name, basePrice, "pasteleria");
+  public get type(): "pasteleria" {
+    return "pasteleria";
   }
 
   public calculatePrice(): number {

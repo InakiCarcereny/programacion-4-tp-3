@@ -22,31 +22,31 @@ describe("E2E API", () => {
     for (const product of res.body) {
       expect(product).toEqual(
         expect.objectContaining({
-          id: expect.any(String),
+          id: expect.any(Number),
+          type: expect.any(String),
           name: expect.any(String),
-          basePrice: expect.any(Number),
-          finalPrice: expect.any(Number),
+          price: expect.any(Number),
         }),
       );
     }
   });
 
   it("GET /products/:id returns an existing product and 404 if it doesn't exist", async () => {
-    const found = await request(app).get("/products/Pastry-1");
+    const found = await request(app).get("/products/19");
     expect(found.status).toBe(200);
     expect(found.body).toEqual(
       expect.objectContaining({
-        id: "Pastry-1",
+        id: 19,
+        type: "pasteleria",
         name: "Muffin de chocolate",
-        basePrice: 2500,
-        finalPrice: 2500,
+        price: 2500,
       }),
     );
 
-    const missing = await request(app).get("/products/Producto-inexistente");
+    const missing = await request(app).get("/products/9999");
     expect(missing.status).toBe(404);
     expect(missing.body).toEqual({
-      error: "Producto Producto-inexistente no encontrado",
+      error: "Producto 9999 no encontrado",
     });
   });
 
@@ -74,12 +74,12 @@ describe("E2E API", () => {
   it("POST /orders creates an order with the expected contract", async () => {
     const res = await request(app)
       .post("/orders")
-      .send({ items: [{ productId: "Pastry-1", quantity: 2 }] });
+      .send({ items: [{ productId: 19, quantity: 2 }] });
 
     expect(res.status).toBe(201);
     expect(res.body).toEqual({
       id: "Order-1",
-      items: [{ productId: "Pastry-1", quantity: 2 }],
+      items: [{ productId: 19, quantity: 2 }],
       status: "pending",
       total: 5000,
     });
@@ -90,7 +90,7 @@ describe("E2E API", () => {
     expect(byId.status).toBe(200);
     expect(byId.body).toEqual({
       id: "Order-1",
-      items: [{ productId: "Pastry-1", quantity: 2 }],
+      items: [{ productId: 19, quantity: 2 }],
       status: "pending",
       total: 5000,
     });
@@ -113,7 +113,7 @@ describe("E2E API", () => {
 
     expect(res.status).toBe(200);
     expect(res.body).toEqual({
-      productId: "Pastry-1",
+      productId: 19,
       name: "Muffin de chocolate",
       quantity: 2,
     });
@@ -128,7 +128,7 @@ describe("E2E API", () => {
 
     const invalidQuantity = await request(app)
       .post("/orders")
-      .send({ items: [{ productId: "Pastry-1", quantity: 0 }] });
+      .send({ items: [{ productId: 19, quantity: 0 }] });
     expect(invalidQuantity.status).toBe(400);
     expect(invalidQuantity.body).toEqual({
       error: "Too small: expected number to be >0",
@@ -136,10 +136,10 @@ describe("E2E API", () => {
 
     const nonExistentProduct = await request(app)
       .post("/orders")
-      .send({ items: [{ productId: "Producto-inexistente", quantity: 1 }] });
+      .send({ items: [{ productId: 9999, quantity: 1 }] });
     expect(nonExistentProduct.status).toBe(404);
     expect(nonExistentProduct.body).toEqual({
-      error: "Producto Producto-inexistente no encontrado",
+      error: "Producto 9999 no encontrado",
     });
   });
 

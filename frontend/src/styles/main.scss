@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Instrument+Serif&display=swap");
+
+@import "./variables";
+@import "bootstrap/scss/bootstrap";
+@import "./menu";
+
+body {
+  min-height: 100vh;
+  background-color: $origen-steel-light;
+}
+
+.font-display {
+  font-family: $font-family-display;
+}
+
+.eyebrow {
+  font-family: $font-family-mono;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.app-shell {
+  max-width: 375px;
+  min-height: 100vh;
+  background-color: $origen-cream;
+  display: flex;
+  flex-direction: column;
+}

@@ -15,7 +15,7 @@ export function toNewOrder(cart: CartState, mesaId: number | null): NewOrder {
   return {
     mesaId,
     items: cart.items.map((item) => ({
-      productId: String(item.product.id),
+      productId: item.product.id,
       quantity: item.quantity,
     })),
   };

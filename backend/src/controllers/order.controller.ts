@@ -11,7 +11,7 @@ export function postOrder(req: Request, res: Response, next: NextFunction): void
   }
 
   try {
-    const order = createOrder(parsed.data.items);
+    const order = createOrder(parsed.data.items, parsed.data.mesaId);
     res.status(201).json(order.toJSON(products));
   } catch (error) {
     next(error);

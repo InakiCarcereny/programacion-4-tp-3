@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export const createOrderSchema = z.object({
+  mesaId: z.number().int().positive().optional(),
   items: z
     .array(
       z.object({

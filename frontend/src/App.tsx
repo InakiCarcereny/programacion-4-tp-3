@@ -8,11 +8,7 @@ import { getMesaFromUrl } from "@/utils/table";
 type View = "menu" | "cart";
 
 export default function App(): JSX.Element {
-  const [view, setView] = useState<View>("menu");
-
-  const handleChange = (view: View): void => {
-    setView(view);
-  };
+  const [view] = useState<View>("menu");
 
   const views: Record<View, JSX.Element> = {
     menu: <MenuView />,

@@ -1,7 +1,9 @@
-import { Product } from "@/types/product";
+import type { Product } from "@/schemas/products";
+
+export type CartProduct = Pick<Product, "id" | "name" | "price">;
 
 export interface CartItem {
-  product: Product;
+  product: CartProduct;
   quantity: number;
 }
 
@@ -10,7 +12,7 @@ export interface CartState {
 }
 
 export type CartAction =
-  | { type: "ADD"; product: Product }
+  | { type: "ADD"; product: CartProduct }
   | { type: "INCREMENT"; productId: number }
   | { type: "DECREMENT"; productId: number }
   | { type: "REMOVE"; productId: number }

@@ -8,20 +8,20 @@ const VARIETIES: CoffeeVariety[] = ["Brasil", "Colombia", "Etiopia"];
 
 export function generateCoffees(): Product[] {
   const products: Product[] = [];
-  let counter = 1;
+  let espressoId = 1;
 
   for (const size of SIZES) {
     for (const variety of VARIETIES) {
-      products.push(new Espresso(`Espresso-${counter}`, size, variety));
-      counter += 1;
+      products.push(new Espresso(espressoId, size, variety));
+      espressoId += 1;
     }
   }
 
-  counter = 1;
+  let filteredId = 10;
   for (const size of SIZES) {
     for (const variety of VARIETIES) {
-      products.push(new FilteredCoffee(`Filtered-${counter}`, size, variety));
-      counter += 1;
+      products.push(new FilteredCoffee(filteredId, size, variety));
+      filteredId += 1;
     }
   }
 

@@ -8,11 +8,7 @@ import { CartProvider } from "@/context/CartContext";
 type View = "menu" | "cart" | "done";
 
 export default function App(): JSX.Element {
-  const [view, setView] = useState<View>("menu");
-
-  const handleChange = (view: View): void => {
-    setView(view);
-  };
+  const [view] = useState<View>("menu");
 
   const views: Record<View, JSX.Element> = {
     menu: <MenuView />,

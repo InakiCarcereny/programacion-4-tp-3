@@ -1,4 +1,4 @@
-import { productosSchema, type Producto } from "@/schemas/products";
+import { productsSchema, type Product } from "@/schemas/products";
 
 export class ApiError extends Error {
   constructor(
@@ -24,12 +24,12 @@ async function readErrorMessage(response: Response): Promise<string> {
       return body.error;
     }
   } catch {
-    // sin cuerpo json: usamos el codigo de estado
+    //
   }
   return `Error ${response.status}`;
 }
 
-export async function getProductos(): Promise<Producto[]> {
+export async function getProducts(): Promise<Product[]> {
   const response = await fetch("/api/products");
 
   if (!response.ok) {
@@ -37,7 +37,7 @@ export async function getProductos(): Promise<Producto[]> {
   }
 
   const data: unknown = await response.json();
-  const parsed = productosSchema.safeParse(data);
+  const parsed = productsSchema.safeParse(data);
 
   if (!parsed.success) {
     throw new ContractError();

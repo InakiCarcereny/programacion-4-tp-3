@@ -15,26 +15,23 @@ export function PastrySection({ pastries = defaultPastries }: PastrySectionProps
   const { dispatch } = useCart();
 
   return (
-    <section aria-labelledby="pastry-heading" className="d-flex flex-column gap-2">
-      <h2 id="pastry-heading" className="fs-2 fw-light mb-0 font-display">
+    <section aria-labelledby="pastry-heading" className="pastry-section">
+      <h2 id="pastry-heading" className="pastry-heading">
         Pastelería
       </h2>
 
-      <ul className="list-unstyled mb-0">
+      <ul className="pastry-list">
         {pastries.map((pastry) => (
-          <li
-            key={pastry.id}
-            className="d-flex justify-content-between align-items-center py-3 border-bottom"
-          >
-            <div>
-              <p className="fw-semibold mb-0">{pastry.name}</p>
+          <li key={pastry.id} className="pastry-item">
+            <div className="pastry-info">
+              <p className="pastry-name">{pastry.name}</p>
 
-              <p className="text-success mb-0">{formatPrice(pastry.price)}</p>
+              <p className="pastry-price">{formatPrice(pastry.price)}</p>
             </div>
 
             <button
               type="button"
-              className="btn btn-outline-dark rounded-1"
+              className="pastry-add"
               aria-label={`Agregar ${pastry.name}`}
               onClick={() => dispatch({ type: "ADD", product: pastry })}
             >

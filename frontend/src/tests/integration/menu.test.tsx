@@ -41,19 +41,22 @@ describe("menu loaded from the api", () => {
     render(<App />);
 
     expect(screen.getByRole("status")).toBeInTheDocument();
-    expect(await screen.findByText("Expreso Pocillo Brasil")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Café" })).toBeInTheDocument();
   });
 
-  it("renders every product with its price coming from the api", async () => {
+  it("renders coffee prices and pastries from the api", async () => {
+    const user = userEvent.setup();
     server.use(http.get("/api/products", () => HttpResponse.json(productos)));
 
     render(<App />);
 
-    await screen.findByText("Expreso Pocillo Brasil");
+    await screen.findByRole("heading", { name: "Café" });
     const menu = screen.getByRole("region", { name: "Menú" });
 
-    expect(within(menu).getByText("Expreso Pocillo Brasil")).toBeInTheDocument();
-    expect(within(menu).getByText("$5.900")).toBeInTheDocument();
+    await user.click(within(menu).getByRole("button", { name: "Expreso" }));
+    await user.click(within(menu).getByRole("button", { name: "Pocillo" }));
+
+    expect(within(menu).getByRole("button", { name: /Brasil/i })).toHaveTextContent("$5.900");
     expect(within(menu).getByText("Muffin de chocolate")).toBeInTheDocument();
     expect(within(menu).getByText("$2.500")).toBeInTheDocument();
   });
@@ -88,7 +91,7 @@ describe("menu retry", () => {
     await screen.findByRole("alert");
     await user.click(screen.getByRole("button", { name: "Reintentar" }));
 
-    expect(await screen.findByText("Expreso Pocillo Brasil")).toBeInTheDocument();
+    expect(await screen.findByRole("heading", { name: "Café" })).toBeInTheDocument();
   });
 });
 

@@ -3,7 +3,9 @@ $origen-concrete: #8c8980;
 $origen-rust: #b5651d;
 $origen-steel-light: #d8d5cd;
 $origen-cream: #ede8de;
+$origen-cream-light: #fff8ee;
 $origen-ink: #1a1a1a;
+$origen-white: #fff;
 
 $primary: $origen-charcoal;
 $secondary: $origen-concrete;
@@ -15,11 +17,12 @@ $body-bg: $origen-cream;
 $body-color: $origen-ink;
 $border-color: $origen-steel-light;
 
-$border-radius: 0.20rem;
+$border-radius: 0.2rem;
 $border-radius-lg: 0.375rem;
 $border-radius-sm: 0.125rem;
 
 $font-family-base:
+  "Archivo",
   system-ui,
   -apple-system,
   "Segoe UI",
@@ -27,3 +30,4 @@ $font-family-base:
   sans-serif;
 
 $font-family-display: "Instrument Serif", serif;
+$font-family-mono: "IBM Plex Mono", monospace;

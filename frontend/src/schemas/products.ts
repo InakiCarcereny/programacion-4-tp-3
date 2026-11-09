@@ -1,38 +1,43 @@
 import { z } from "zod";
 
-export const coffeeSizeSchema = z.enum(["Pocillo", "Mediano", "Taza grande"]);
-
-export const coffeeVarietySchema = z.enum(["Brasil", "Colombia", "Etiopia"]);
-
-export const variedadSchema = z.object({
-  nombre: coffeeVarietySchema,
-  descripcion: z.string(),
-});
-
-const baseProductoSchema = z.object({
-  id: z.string(),
+export const varietySchema = z.object({
   name: z.string(),
-  basePrice: z.number(),
-  finalPrice: z.number(),
+  description: z.string(),
 });
 
-const cafeSchema = baseProductoSchema.extend({
-  tipo: z.enum(["expreso", "filtrado"]),
-  tamanio: coffeeSizeSchema,
-  gramosCafe: z.number(),
-  variedad: variedadSchema,
+const productBase = {
+  id: z.number().int(),
+  name: z.string(),
+  price: z.number(),
+};
+
+export const espressoSchema = z.object({
+  ...productBase,
+  type: z.literal("expreso"),
+  size: z.string(),
+  grams: z.number(),
+  variety: varietySchema,
 });
 
-const pasteleriaSchema = baseProductoSchema.extend({
-  tipo: z.literal("pasteleria"),
+export const filteredSchema = z.object({
+  ...productBase,
+  type: z.literal("filtrado"),
+  size: z.string(),
+  grams: z.number(),
+  variety: varietySchema,
 });
 
-export const productoSchema = z.union([cafeSchema, pasteleriaSchema]);
+export const pastrySchema = z.object({
+  ...productBase,
+  type: z.literal("pasteleria"),
+});
 
-export const productosSchema = z.array(productoSchema);
+export const productSchema = z.discriminatedUnion("type", [
+  espressoSchema,
+  filteredSchema,
+  pastrySchema,
+]);
 
-export type Producto = z.infer<typeof productoSchema>;
-export type Cafe = z.infer<typeof cafeSchema>;
-export type Pasteleria = z.infer<typeof pasteleriaSchema>;
-export type CoffeeSize = z.infer<typeof coffeeSizeSchema>;
-export type CoffeeVariety = z.infer<typeof coffeeVarietySchema>;
+export const productsSchema = z.array(productSchema);
+
+export type Product = z.infer<typeof productSchema>;

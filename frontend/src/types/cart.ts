@@ -11,7 +11,7 @@ export interface CartState {
 
 export type CartAction =
   | { type: "ADD"; product: Product }
-  | { type: "INCREMENT"; productId: number }
-  | { type: "DECREMENT"; productId: number }
-  | { type: "REMOVE"; productId: number }
+  | { type: "INCREMENT"; productId: string }
+  | { type: "DECREMENT"; productId: string }
+  | { type: "REMOVE"; productId: string }
   | { type: "CLEAR" };

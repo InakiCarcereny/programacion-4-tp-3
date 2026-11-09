@@ -1,0 +1,190 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding: 8px 4px 24px;
+}
+
+.coffee-section {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.coffee-heading,
+.pastry-heading {
+  margin: 0;
+  font-family: $font-family-display;
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1;
+}
+
+.coffee-step {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.coffee-step__legend {
+  margin-bottom: 8px;
+  padding: 0;
+  font-family: $font-family-mono;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: $origen-charcoal;
+}
+
+.coffee-options {
+  display: grid;
+  gap: 8px;
+}
+
+.coffee-options--drinks {
+  grid-template-columns: 1fr 1fr;
+}
+
+.coffee-options--sizes {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.coffee-option {
+  height: 48px;
+  border: 1px solid $origen-concrete;
+  background: transparent;
+  color: $origen-ink;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.coffee-option--size {
+  font-size: 14px;
+}
+
+.coffee-option[aria-pressed="true"] {
+  border-color: $origen-charcoal;
+  background: $origen-charcoal;
+  color: $origen-cream;
+}
+
+.coffee-origins {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.coffee-origin {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid $origen-steel-light;
+  background: $origen-white;
+  color: $origen-ink;
+  text-align: left;
+  cursor: pointer;
+}
+
+.coffee-origin[aria-pressed="true"] {
+  border-color: $origen-rust;
+  background: $origen-cream-light;
+}
+
+.coffee-origin__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.coffee-origin__name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.coffee-origin__price {
+  font-family: $font-family-mono;
+  font-size: 14px;
+  color: $origen-rust;
+}
+
+.coffee-origin__description {
+  font-size: 13px;
+  line-height: 1.4;
+  color: $origen-charcoal;
+  text-wrap: pretty;
+}
+
+.coffee-add {
+  height: 52px;
+  border: 0;
+  background: $origen-steel-light;
+  color: $origen-concrete;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: not-allowed;
+}
+
+.coffee-add:not(:disabled) {
+  background: $origen-rust;
+  color: $origen-white;
+  cursor: pointer;
+}
+
+.pastry-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pastry-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pastry-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 0;
+  border-bottom: 1px solid $origen-steel-light;
+}
+
+.pastry-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pastry-name {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.pastry-price {
+  margin: 0;
+  font-family: $font-family-mono;
+  font-size: 14px;
+  color: $origen-rust;
+}
+
+.pastry-add {
+  height: 44px;
+  padding: 0 16px;
+  border: 1px solid $origen-charcoal;
+  background: transparent;
+  color: $origen-charcoal;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}

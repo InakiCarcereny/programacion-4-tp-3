@@ -3,17 +3,24 @@ import { Checkout } from "@/components/Checkout";
 import { Header } from "@/components/Header";
 import { MenuView } from "@/components/MenuView";
 import { CartProvider } from "@/context/CartContext";
-import { getMesaFromUrl } from "@/utils/table";
+import { getTableFromUrl } from "@/utils/table";
 
 type View = "menu" | "cart";
 
 export default function App(): JSX.Element {
-  const [view] = useState<View>("menu");
+  const [view, setView] = useState<View>("menu");
+
+  const handleChange = (nextView: View): void => {
+    setView(nextView);
+  };
 
   const views: Record<View, JSX.Element> = {
     menu: <MenuView />,
     cart: (
-      <Checkout mesa={getMesaFromUrl(window.location.search)} onBack={() => handleChange("menu")} />
+      <Checkout
+        mesa={getTableFromUrl(window.location.search)}
+        onBack={() => handleChange("menu")}
+      />
     ),
   };
 

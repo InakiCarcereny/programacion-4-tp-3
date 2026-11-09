@@ -59,7 +59,7 @@ export function Checkout({ mesa, onBack }: CheckoutProps): JSX.Element {
 
   return (
     <>
-      <CartView mesa={mesa ?? undefined} onBack={onBack} onConfirm={handleConfirm} />
+      <CartView table={mesa ?? undefined} onBack={onBack} onConfirm={handleConfirm} />
 
       {state.status === "enviando" && (
         <p role="status" className="text-secondary text-center mt-3 mb-0">

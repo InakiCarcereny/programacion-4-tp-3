@@ -15,6 +15,57 @@ describe("POST /orders", () => {
     expect(res.body.total).toBe(5000);
   });
 
+  it("creates an order for a valid table and returns its mesaId", async () => {
+    const res = await request(app)
+      .post("/orders")
+      .send({ mesaId: 4, items: [{ productId: "Pastry-1", quantity: 2 }] });
+    expect(res.status).toBe(201);
+    expect(res.body.mesaId).toBe(4);
+    expect(res.body.status).toBe("pending");
+    expect(res.body.total).toBe(5000);
+  });
+
+  it("omits mesaId for counter pickup orders", async () => {
+    const res = await request(app)
+      .post("/orders")
+      .send({ items: [{ productId: "Pastry-1", quantity: 1 }] });
+    expect(res.status).toBe(201);
+    expect(res.body).not.toHaveProperty("mesaId");
+  });
+
+  it("accepts the maximum valid table", async () => {
+    const res = await request(app)
+      .post("/orders")
+      .send({ mesaId: 20, items: [{ productId: "Pastry-1", quantity: 1 }] });
+    expect(res.status).toBe(201);
+    expect(res.body.mesaId).toBe(20);
+  });
+
+  it("returns 404 for a table that does not exist", async () => {
+    const res = await request(app)
+      .post("/orders")
+      .send({ mesaId: 21, items: [{ productId: "Pastry-1", quantity: 1 }] });
+    expect(res.status).toBe(404);
+    expect(res.body).toEqual({ error: "Mesa 21 no encontrada" });
+  });
+
+  it("returns 400 for invalid mesaId values", async () => {
+    const cases: Array<{ mesaId: unknown }> = [
+      { mesaId: 0 },
+      { mesaId: -1 },
+      { mesaId: 1.5 },
+      { mesaId: "4" },
+    ];
+
+    for (const { mesaId } of cases) {
+      const res = await request(app)
+        .post("/orders")
+        .send({ mesaId, items: [{ productId: "Pastry-1", quantity: 1 }] });
+      expect(res.status).toBe(400);
+      expect(res.body).toEqual({ error: expect.any(String) });
+    }
+  });
+
   it("returns 400 for an empty order", async () => {
     const res = await request(app).post("/orders").send({ items: [] });
     expect(res.status).toBe(400);
@@ -65,6 +116,21 @@ describe("GET /orders/:id", () => {
     const res = await request(app).get(`/orders/${created.body.id}`);
     expect(res.status).toBe(200);
     expect(res.body.total).toBe(2500);
+  });
+
+  it("returns the order with mesaId, status, items and total", async () => {
+    const created = await request(app)
+      .post("/orders")
+      .send({ mesaId: 4, items: [{ productId: "Pastry-1", quantity: 2 }] });
+    const res = await request(app).get(`/orders/${created.body.id}`);
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual({
+      id: created.body.id,
+      mesaId: 4,
+      items: [{ productId: "Pastry-1", quantity: 2 }],
+      status: "pending",
+      total: 5000,
+    });
   });
 
   it("returns 404 if the order does not exist", async () => {

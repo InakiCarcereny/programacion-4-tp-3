@@ -4,37 +4,15 @@ import { delay, http, HttpResponse } from "msw";
 import { render, screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
 import App from "@/App";
+import { productsFixture } from "@/mocks/fixtures";
 import { server } from "@/mocks/server";
-
-const productos = [
-  {
-    id: "Espresso-1",
-    tipo: "expreso",
-    name: "Expreso Pocillo Brasil",
-    basePrice: 5000,
-    finalPrice: 5900,
-    tamanio: "Pocillo",
-    gramosCafe: 18,
-    variedad: {
-      nombre: "Brasil",
-      descripcion: "Acidez baja, cuerpo intenso y notas a chocolate y nuez",
-    },
-  },
-  {
-    id: "Pastry-1",
-    tipo: "pasteleria",
-    name: "Muffin de chocolate",
-    basePrice: 2500,
-    finalPrice: 2500,
-  },
-];
 
 describe("menu loaded from the api", () => {
   it("shows a loading indicator while the menu loads", async () => {
     server.use(
       http.get("/api/products", async () => {
         await delay(100);
-        return HttpResponse.json(productos);
+        return HttpResponse.json(productsFixture);
       }),
     );
 
@@ -46,7 +24,7 @@ describe("menu loaded from the api", () => {
 
   it("renders coffee prices and pastries from the api", async () => {
     const user = userEvent.setup();
-    server.use(http.get("/api/products", () => HttpResponse.json(productos)));
+    server.use(http.get("/api/products", () => HttpResponse.json(productsFixture)));
 
     render(<App />);
 
@@ -54,9 +32,9 @@ describe("menu loaded from the api", () => {
     const menu = screen.getByRole("region", { name: "Menú" });
 
     await user.click(within(menu).getByRole("button", { name: "Expreso" }));
-    await user.click(within(menu).getByRole("button", { name: "Pocillo" }));
+    await user.click(within(menu).getByRole("button", { name: "Mediano" }));
 
-    expect(within(menu).getByRole("button", { name: /Brasil/i })).toHaveTextContent("$5.900");
+    expect(within(menu).getByRole("button", { name: /Colombia/i })).toHaveTextContent("$7.360");
     expect(within(menu).getByText("Muffin de chocolate")).toBeInTheDocument();
     expect(within(menu).getByText("$2.500")).toBeInTheDocument();
   });
@@ -98,9 +76,7 @@ describe("menu retry", () => {
 describe("menu contract", () => {
   it("shows an error when the response does not match the contract", async () => {
     server.use(
-      http.get("/api/products", () =>
-        HttpResponse.json([{ id: 1, nombre: "campo que no existe" }]),
-      ),
+      http.get("/api/products", () => HttpResponse.json([{ id: 1, name: "campo que no existe" }])),
     );
 
     render(<App />);

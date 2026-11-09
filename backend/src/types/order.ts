@@ -1,7 +1,7 @@
 export type OrderStatus = "pending" | "preparing" | "delivered";
 
 export interface OrderItem {
-  productId: string;
+  productId: number;
   quantity: number;
 }
 

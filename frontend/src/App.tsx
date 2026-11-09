@@ -1,23 +1,27 @@
 import { useState } from "react";
-import { CartView } from "@/components/CartView";
-import { DoneView } from "@/components/DoneView";
+import { Checkout } from "@/components/Checkout";
 import { Header } from "@/components/Header";
 import { MenuView } from "@/components/MenuView";
 import { CartProvider } from "@/context/CartContext";
+import { getTableFromUrl } from "@/utils/table";
 
-type View = "menu" | "cart" | "done";
+type View = "menu" | "cart";
 
 export default function App(): JSX.Element {
   const [view, setView] = useState<View>("menu");
 
-  const handleChange = (view: View): void => {
-    setView(view);
+  const handleChange = (nextView: View): void => {
+    setView(nextView);
   };
 
   const views: Record<View, JSX.Element> = {
     menu: <MenuView />,
-    cart: <CartView />,
-    done: <DoneView />,
+    cart: (
+      <Checkout
+        mesa={getTableFromUrl(window.location.search)}
+        onBack={() => handleChange("menu")}
+      />
+    ),
   };
 
   return (

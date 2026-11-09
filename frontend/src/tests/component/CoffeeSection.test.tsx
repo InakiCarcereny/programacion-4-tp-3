@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
 import { CoffeeSection } from "@/components/CoffeeSection";
 import { CartProvider, useCart } from "@/context/CartContext";
-import { productosFixture } from "@/mocks/fixtures";
+import { coffeeProductsFixture } from "@/mocks/fixtures";
 
 function CartProbe(): JSX.Element {
   const { state, subtotal } = useCart();
@@ -23,7 +23,7 @@ function CartProbe(): JSX.Element {
 function renderCoffeeSection(): void {
   render(
     <CartProvider>
-      <CoffeeSection productos={productosFixture} />
+      <CoffeeSection products={coffeeProductsFixture} />
       <CartProbe />
     </CartProvider>,
   );
@@ -161,7 +161,7 @@ describe("CoffeeSection", () => {
     await user.click(within(getGroup(/origen/i)).getByRole("button", { name: /Colombia/i }));
     await user.click(screen.getByRole("button", { name: /agregar al pedido/i }));
 
-    expect(screen.getByText("Expreso Mediano Colombia:1")).toBeInTheDocument();
+    expect(screen.getByText("Expreso Mediano:1")).toBeInTheDocument();
     expect(screen.getByTestId("subtotal")).toHaveTextContent("7360");
   });
 });

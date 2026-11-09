@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 import { cartReducer, getSubtotal, initialCartState } from "@/context/cart-reducer";
-import type { Product } from "@/types/product";
+import type { CartProduct } from "@/types/cart";
 
-const muffin: Product = { id: "Pastry-1", name: "Muffin de chocolate", price: 2500 };
-const cake: Product = {
-  id: "Pastry-2",
+const muffin: CartProduct = { id: 19, name: "Muffin de chocolate", price: 2500 };
+const cake: CartProduct = {
+  id: 20,
   name: "Torta selva negra",
   price: 4200,
 };

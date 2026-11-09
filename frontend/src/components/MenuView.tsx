@@ -1,7 +1,9 @@
 import { CoffeeSection } from "@/components/CoffeeSection";
 import { PastrySection } from "@/components/PastrySection";
 import { useMenu } from "@/hooks/useMenu";
-import type { Pasteleria } from "@/schemas/products";
+import type { Product } from "@/schemas/products";
+
+type Pastry = Extract<Product, { type: "pasteleria" }>;
 
 export function MenuView(): JSX.Element {
   const { state, retry } = useMenu();
@@ -25,17 +27,17 @@ export function MenuView(): JSX.Element {
     );
   }
 
-  const pastries = state.productos
-    .filter((producto): producto is Pasteleria => producto.tipo === "pasteleria")
-    .map((producto) => ({
-      id: producto.id,
-      name: producto.name,
-      price: producto.finalPrice,
+  const pastries = state.products
+    .filter((product): product is Pastry => product.type === "pasteleria")
+    .map((product) => ({
+      id: product.id,
+      name: product.name,
+      price: product.price,
     }));
 
   return (
     <div role="region" aria-label="Menú" className="menu">
-      <CoffeeSection productos={state.productos} />
+      <CoffeeSection products={state.products} />
 
       <PastrySection pastries={pastries} />
     </div>

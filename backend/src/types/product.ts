@@ -1,21 +1,22 @@
-import type { CoffeeSize, CoffeeVariety } from "@/types/coffee";
+import type { CoffeeSize } from "@/types/coffee";
 
-export type CoffeeType = "expreso" | "filtrado";
+export type ProductType = "expreso" | "filtrado" | "pasteleria";
 
-export type ProductType = CoffeeType | "pasteleria";
-
-export interface CoffeeVarietyInfo {
-  nombre: CoffeeVariety;
-  descripcion: string;
+export interface Variety {
+  name: string;
+  description: string;
 }
 
 export interface Product {
-  id: string;
+  id: number;
+  type: ProductType;
   name: string;
-  basePrice: number;
-  finalPrice: number;
-  tipo: ProductType;
-  tamanio?: CoffeeSize;
-  gramosCafe?: number;
-  variedad?: CoffeeVarietyInfo;
+  price: number;
+}
+
+export interface CoffeeProduct extends Product {
+  type: "expreso" | "filtrado";
+  size: CoffeeSize;
+  grams: number;
+  variety: Variety;
 }

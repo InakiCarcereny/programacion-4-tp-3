@@ -1,38 +1,44 @@
-import type { Cafe, CoffeeSize, CoffeeVariety, Producto } from "@/schemas/products";
+import type { Product } from "@/schemas/products";
+
+type CoffeeProduct = Extract<Product, { type: "expreso" | "filtrado" }>;
+type CoffeeType = CoffeeProduct["type"];
 
 export interface CoffeeSelection {
-  tipo: Cafe["tipo"];
-  tamanio: CoffeeSize;
-  origen: CoffeeVariety;
+  type: CoffeeType;
+  size: string;
+  origin: string;
 }
 
 export interface CoffeeOrigin {
-  nombre: CoffeeVariety;
-  descripcion: string;
+  name: string;
+  description: string;
 }
 
-export function findCoffee(productos: Producto[], selection: CoffeeSelection): Cafe | undefined {
-  return productos.find(
-    (producto): producto is Cafe =>
-      producto.tipo !== "pasteleria" &&
-      producto.tipo === selection.tipo &&
-      producto.tamanio === selection.tamanio &&
-      producto.variedad.nombre === selection.origen,
+export function findCoffee(
+  products: Product[],
+  selection: CoffeeSelection,
+): CoffeeProduct | undefined {
+  return products.find(
+    (product): product is CoffeeProduct =>
+      product.type !== "pasteleria" &&
+      product.type === selection.type &&
+      product.size === selection.size &&
+      product.variety.name === selection.origin,
   );
 }
 
-export function listCoffeeOrigins(productos: Producto[]): CoffeeOrigin[] {
-  const origins = new Map<CoffeeVariety, CoffeeOrigin>();
+export function listCoffeeOrigins(products: Product[]): CoffeeOrigin[] {
+  const origins = new Map<string, CoffeeOrigin>();
 
-  for (const producto of productos) {
-    if (producto.tipo === "pasteleria") {
+  for (const product of products) {
+    if (product.type === "pasteleria") {
       continue;
     }
 
-    if (!origins.has(producto.variedad.nombre)) {
-      origins.set(producto.variedad.nombre, {
-        nombre: producto.variedad.nombre,
-        descripcion: producto.variedad.descripcion,
+    if (!origins.has(product.variety.name)) {
+      origins.set(product.variety.name, {
+        name: product.variety.name,
+        description: product.variety.description,
       });
     }
   }

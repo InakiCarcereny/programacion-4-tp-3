@@ -6,8 +6,8 @@ import { ApiError, ContractError, createOrder } from "@/services/client";
 const pedido = {
   mesaId: 4,
   items: [
-    { productId: "Espresso-5", quantity: 2 },
-    { productId: "Pastry-19", quantity: 1 },
+    { productId: 5, quantity: 2 },
+    { productId: 19, quantity: 1 },
   ],
 };
 
@@ -45,14 +45,14 @@ describe("createOrder", () => {
   it("throws the api message when the order is rejected", async () => {
     server.use(
       http.post("/api/orders", () =>
-        HttpResponse.json({ error: "Producto Pastry-19 no encontrado" }, { status: 404 }),
+        HttpResponse.json({ error: "Producto 19 no encontrado" }, { status: 404 }),
       ),
     );
 
     const error = await createOrder(pedido).catch((e: unknown) => e);
 
     expect(error).toBeInstanceOf(ApiError);
-    expect(error).toHaveProperty("message", "Producto Pastry-19 no encontrado");
+    expect(error).toHaveProperty("message", "Producto 19 no encontrado");
     expect(error).toHaveProperty("status", 404);
   });
 

@@ -22,8 +22,8 @@ describe("toNewOrder", () => {
     expect(toNewOrder(cart, 4)).toEqual({
       mesaId: 4,
       items: [
-        { productId: "5", quantity: 2 },
-        { productId: "19", quantity: 1 },
+        { productId: 5, quantity: 2 },
+        { productId: 19, quantity: 1 },
       ],
     });
   });

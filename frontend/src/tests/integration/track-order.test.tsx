@@ -14,7 +14,7 @@ const cart: CartState = {
 const pedido = {
   id: "Order-1",
   mesaId: 4,
-  items: [{ productId: "5", quantity: 2 }],
+  items: [{ productId: 5, quantity: 2 }],
   status: "pending",
   total: 14720,
 };

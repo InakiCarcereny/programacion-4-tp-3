@@ -18,8 +18,8 @@ const pedidoCreado = {
   id: "Order-1",
   mesaId: 4,
   items: [
-    { productId: "5", quantity: 2 },
-    { productId: "19", quantity: 1 },
+    { productId: 5, quantity: 2 },
+    { productId: 19, quantity: 1 },
   ],
   status: "pending",
   total: 17220,
@@ -51,8 +51,8 @@ describe("confirm order", () => {
     expect(body).toEqual({
       mesaId: 4,
       items: [
-        { productId: "5", quantity: 2 },
-        { productId: "19", quantity: 1 },
+        { productId: 5, quantity: 2 },
+        { productId: 19, quantity: 1 },
       ],
     });
   });

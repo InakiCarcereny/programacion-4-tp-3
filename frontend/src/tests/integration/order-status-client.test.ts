@@ -6,7 +6,7 @@ import { ApiError, ContractError, getOrder } from "@/services/client";
 const pedido = {
   id: "Order-1",
   mesaId: 4,
-  items: [{ productId: "Espresso-5", quantity: 2 }],
+  items: [{ productId: 5, quantity: 2 }],
   status: "preparing",
   total: 14720,
 };

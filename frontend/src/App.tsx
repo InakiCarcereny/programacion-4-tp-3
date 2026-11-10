@@ -15,7 +15,7 @@ export default function App(): JSX.Element {
   };
 
   const views: Record<View, JSX.Element> = {
-    menu: <MenuView />,
+    menu: <MenuView onViewCart={() => setView("cart")} />,
     cart: (
       <Checkout
         mesa={getTableFromUrl(window.location.search)}

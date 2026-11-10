@@ -1,2 +1,8 @@
+packages:
+  - "backend"
+  - "frontend"
+
 allowBuilds:
+  '@parcel/watcher': true
   esbuild: true
+  msw: true

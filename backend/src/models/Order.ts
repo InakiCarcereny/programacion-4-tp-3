@@ -5,8 +5,8 @@ export class Order {
   constructor(
     public readonly id: string,
     public readonly items: OrderItem[],
-    public readonly mesaId?: number,
-    public readonly status: OrderStatus = "pending",
+    public readonly mesaId: number | null = null,
+    public status: OrderStatus = "pending",
   ) {}
 
   public calculateTotal(products: Product[]): number {
@@ -22,7 +22,7 @@ export class Order {
   public toJSON(products: Product[]): IOrder {
     return {
       id: this.id,
-      ...(this.mesaId !== undefined ? { mesaId: this.mesaId } : {}),
+      ...(this.mesaId !== null ? { mesaId: this.mesaId } : {}),
       items: this.items,
       status: this.status,
       total: this.calculateTotal(products),

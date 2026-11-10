@@ -7,7 +7,7 @@ export interface OrderItem {
 
 export interface Order {
   id: string;
-  mesaId?: number;
+  mesaId?: number | null;
   items: OrderItem[];
   status: OrderStatus;
   total: number;

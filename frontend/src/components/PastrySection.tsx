@@ -2,16 +2,11 @@ import { useCart } from "@/context/CartContext";
 import type { CartProduct } from "@/types/cart";
 import { formatPrice } from "@/utils/format-price";
 
-const defaultPastries: CartProduct[] = [
-  { id: 19, name: "Muffin de chocolate", price: 2500 },
-  { id: 20, name: "Torta selva negra", price: 4200 },
-];
-
 interface PastrySectionProps {
-  pastries?: CartProduct[];
+  pastries: CartProduct[];
 }
 
-export function PastrySection({ pastries = defaultPastries }: PastrySectionProps): JSX.Element {
+export function PastrySection({ pastries }: PastrySectionProps): JSX.Element {
   const { dispatch } = useCart();
 
   return (

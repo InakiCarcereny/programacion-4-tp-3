@@ -1,3 +1,4 @@
+import { CartBar } from "@/components/CartBar";
 import { CoffeeSection } from "@/components/CoffeeSection";
 import { PastrySection } from "@/components/PastrySection";
 import { useMenu } from "@/hooks/useMenu";
@@ -5,7 +6,11 @@ import type { Product } from "@/schemas/products";
 
 type Pastry = Extract<Product, { type: "pasteleria" }>;
 
-export function MenuView(): JSX.Element {
+interface MenuViewProps {
+  onViewCart?: () => void;
+}
+
+export function MenuView({ onViewCart }: MenuViewProps): JSX.Element {
   const { state, retry } = useMenu();
 
   if (state.status === "cargando") {
@@ -40,6 +45,8 @@ export function MenuView(): JSX.Element {
       <CoffeeSection products={state.products} />
 
       <PastrySection pastries={pastries} />
+
+      <CartBar onViewCart={onViewCart} />
     </div>
   );
 }
